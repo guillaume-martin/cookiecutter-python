@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.description }}"
+authors = ["{{ cookiecutter.author_name }} <{{ cookiecutter.author_email }}>"]
+readme = "README.md"
+packages = [{ include = "{{ cookiecutter.package_name }}", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^{{ cookiecutter.python_version }}"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.11"
+pytest = "^8.3"
+ruff = "^0.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "{{ cookiecutter.python_version }}"
+mypy_path = "src"
+files = ["src", "tests"]
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py{{ cookiecutter.python_version.replace('.', '') }}"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
